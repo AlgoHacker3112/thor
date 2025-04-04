@@ -1,0 +1,37 @@
+package com.ankit;
+
+import io.dropwizard.Configuration;
+import jakarta.validation.constraints.NotNull;
+
+import java.beans.JavaBean;
+
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import in.vectorpro.dropwizard.swagger.SwaggerBundleConfiguration;
+import lombok.Data;
+
+@Data
+public class AppConfiguration extends Configuration {
+    // TODO: implement service configuration
+
+    @NotEmpty
+    @JsonProperty
+    private String template;
+
+    @NotEmpty
+    @JsonProperty
+    private String defaultName = "Thor";
+
+    @NotNull
+    @JsonProperty
+    private SwaggerBundleConfiguration swagger;
+
+    // @Valid
+    // @NotNull
+    // private RabbitMQFactory rabbitmq = new RabbitMQFactory();
+
+    // @JsonProperty("rabbitmq")
+    // public void setRabbitMQFactory(RabbitMQFactory factory) { this.rabbitmq = factory; }
+}

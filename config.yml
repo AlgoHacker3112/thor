@@ -1,0 +1,40 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+logging:
+  level: INFO
+  loggers:
+    com.ankit: DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      logFormat: "%d [%thread] %-5level %logger{36} - %msg%n"
+
+# Default values used by the standard TemplateHealthCheck
+template: "Hello, %s!"
+defaultName: Stranger
+
+swagger:
+  enabled: true
+  swaggerVersion: 2.0
+  resourcePackage: com.ankit.resources
+  apiVersion: 1.0.0
+
+# Add configuration for RabbitMQ and MQTT connections here later
+# rabbitmq:
+#   host: localhost
+#   port: 5672
+#   username: guest
+#   password: guest
+#   virtualHost: /
+# mqtt:
+#   brokerUrl: tcp://localhost:1883
+#   clientId: dropwizard_publisher
+#   username: # optional
+#   password: # optional
