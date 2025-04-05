@@ -1,7 +1,12 @@
 package com.ankit;
 
 import com.ankit.health.TemplateHealthCheck;
+import com.ankit.managed.ManagedActorSystem;
+import com.ankit.managed.RmqManager;
 import com.ankit.module.CoreModule;
+import com.ankit.rmq.RmqConsumerManager;
+import com.google.inject.Injector;
+import akka.actor.ActorSystem;
 import in.vectorpro.dropwizard.swagger.SwaggerBundle;
 import in.vectorpro.dropwizard.swagger.SwaggerBundleConfiguration;
 import io.dropwizard.Application;
@@ -11,6 +16,10 @@ import lombok.val;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
 
 public class App extends Application<AppConfiguration> {
+
+    private Injector injector;
+
+    private GuiceBundle guiceBundle;
 
     public static void main(final String[] args) throws Exception {
         new App().run(args);
@@ -23,10 +32,11 @@ public class App extends Application<AppConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<AppConfiguration> bootstrap) {
-        val guiceBundle = GuiceBundle.builder()
+        guiceBundle = GuiceBundle.builder()
             .modules(new CoreModule())
             .enableAutoConfig(getClass().getPackage().getName())
             .build();
+
         bootstrap.addBundle(guiceBundle);
         bootstrap.addBundle(getSwaggerBundleConfiguration());
 
@@ -45,10 +55,18 @@ public class App extends Application<AppConfiguration> {
     public void run(final AppConfiguration configuration,
                     final Environment environment) {
         
+        injector = guiceBundle.getInjector();
+        
+        final RmqManager rmqManager = injector.getInstance(RmqManager.class);
+        final RmqConsumerManager rmqConsumerManager = injector.getInstance(RmqConsumerManager.class);
+        final ActorSystem actorSystem = injector.getInstance(ActorSystem.class);
         // even if guice is used, we need to register health check and can manually register to environment
         final TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
-                    
+
+        environment.lifecycle().manage(new ManagedActorSystem(actorSystem));
+        environment.lifecycle().manage(rmqManager);
+        environment.lifecycle().manage(rmqConsumerManager);
 
     }
 

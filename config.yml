@@ -26,6 +26,33 @@ swagger:
   resourcePackage: com.ankit.resources
   apiVersion: 1.0.0
 
+rmqConfiguration:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  virtualHost: /
+
+actorsConfig: 
+  TXN: 
+    exchange: txn-exchange
+    routingKey: txn-routing-key
+    queue: txn-queue
+    exchangeType: direct
+    durable: true
+    autoDelete: false
+    arguments: {}
+  TXN_REPLY: 
+    exchange: txn-exchange
+    routingKey: txn-reply-routing-key
+    queue: txn-reply-queue
+    exchangeType: direct
+    durable: true
+    autoDelete: false
+    arguments: {}
+  
+    
+
 # Add configuration for RabbitMQ and MQTT connections here later
 # rabbitmq:
 #   host: localhost
