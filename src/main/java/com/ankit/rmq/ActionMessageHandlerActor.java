@@ -24,9 +24,7 @@ public class ActionMessageHandlerActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
             .match(BaseRmqMessage.class, message -> {
-                
                 invokeHandlerSafely(message);
-                
                 log.info("Handler [{}] processing: {}", actionType, message);
             })
             .build();
