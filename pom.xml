@@ -6,7 +6,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ankit</groupId>
+    <groupId>com.thor</groupId>
     <artifactId>thor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -19,7 +19,7 @@
         <dropwizard.version>2.1.4</dropwizard.version>
         <guicey.version>5.8.0</guicey.version>
         <lombok.version>1.18.32</lombok.version>
-        <mainClass>com.ankit.App</mainClass>
+        <mainClass>com.thor.App</mainClass>
     </properties>
 
     <dependencyManagement>

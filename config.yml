@@ -9,7 +9,7 @@ server:
 logging:
   level: INFO
   loggers:
-    com.ankit: DEBUG
+    com.thor: DEBUG
   appenders:
     - type: console
       threshold: ALL
@@ -23,7 +23,7 @@ defaultName: Stranger
 swagger:
   enabled: true
   swaggerVersion: 2.0
-  resourcePackage: com.ankit.resources
+  resourcePackage: com.thor.resources
   apiVersion: 1.0.0
 
 rmqConfiguration:
